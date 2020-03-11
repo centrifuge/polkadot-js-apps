@@ -13,7 +13,11 @@ const DEV: Option[] = [
 ];
 
 const LIVE: Option[] = [
-
+  {
+    info: 'mainnet',
+    text: 'Centrifuge Mainnet (Full Node, hosted by Centrifuge)',
+    value: 'wss://fullnode.centrifuge.io'
+  },
 ];
 
 const TEST: Option[] = [
