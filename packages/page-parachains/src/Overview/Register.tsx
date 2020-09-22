@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-democracy authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { ParaInfo } from '@polkadot/types/interfaces';
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types';
@@ -46,9 +45,7 @@ function Register ({ isDisabled, nextFreeId = BN_THOUSAND, sudoKey }: Props): Re
     null,
     (code): boolean => !!code && isWasmValidRef.current
   );
-  const [initialHeadState, isInitialHeadStateValid, setInitialHeadState] = useFormField<Uint8Array>(
-    null
-  );
+  const [initialHeadState, isInitialHeadStateValid, setInitialHeadState] = useFormField<Uint8Array>(null);
   const [scheduling, , setScheduling] = useFormField<Scheduling>('Always');
 
   const info = useMemo(

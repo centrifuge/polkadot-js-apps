@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-parachains authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
 import React from 'react';
@@ -13,10 +12,11 @@ import { useTranslation } from '../translate';
 
 interface Props {
   parachainCount?: number;
+  proposalCount?: number;
   nextFreeId?: BN;
 }
 
-function Summary ({ nextFreeId, parachainCount }: Props): React.ReactElement<Props> {
+function Summary ({ nextFreeId, parachainCount, proposalCount }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const { api } = useApi();
 
@@ -34,6 +34,11 @@ function Summary ({ nextFreeId, parachainCount }: Props): React.ReactElement<Pro
             {formatNumber(parachainCount)}
           </CardSummary>
         )}
+        {isNumber(proposalCount) && (
+          <CardSummary label={t<string>('proposals')}>
+            {formatNumber(proposalCount)}
+          </CardSummary>
+        )}
         {api.query.parachains && nextFreeId && (
           <CardSummary label={t<string>('next id')}>
             {formatNumber(nextFreeId)}
@@ -42,7 +47,7 @@ function Summary ({ nextFreeId, parachainCount }: Props): React.ReactElement<Pro
       </section>
       <section>
         <CardSummary
-          className='ui--media-small'
+          className='media--800'
           label={t<string>('best block')}
         >
           <BestNumber />

@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-democracy authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { DeriveParachainInfo } from '@polkadot/api-derive/types';
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types';
@@ -62,7 +61,6 @@ function Deregister ({ id, info, isOpen, onClose, onSubmit, sudoKey }: Props): R
         <br />
         <br />
         <Static
-          className='full label-small'
           help={t<string>('The id of the parachain to be deregistered.')}
           label={t<string>('parachain id')}
           value={id}

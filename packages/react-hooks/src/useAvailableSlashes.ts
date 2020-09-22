@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-council authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { DeriveSessionIndexes } from '@polkadot/api-derive/types';
 import { EraIndex, UnappliedSlash } from '@polkadot/types/interfaces';
@@ -14,8 +13,8 @@ type Unsub = () => void;
 
 export default function useAvailableSlashes (): [BN, UnappliedSlash[]][] {
   const { api } = useApi();
-  const indexes = useCall<DeriveSessionIndexes>(api.derive.session?.indexes, []);
-  const earliestSlash = useCall<Option<EraIndex>>(api.query.staking?.earliestUnappliedSlash, []);
+  const indexes = useCall<DeriveSessionIndexes>(api.derive.session?.indexes);
+  const earliestSlash = useCall<Option<EraIndex>>(api.query.staking?.earliestUnappliedSlash);
   const mountedRef = useIsMountedRef();
   const [slashes, setSlashes] = useState<[BN, UnappliedSlash[]][]>([]);
 
@@ -38,7 +37,7 @@ export default function useAvailableSlashes (): [BN, UnappliedSlash[]][] {
             mountedRef.current && setSlashes(
               values
                 .map((value, index): [BN, UnappliedSlash[]] => [from.addn(index), value])
-                .filter(([, slashes]): boolean => slashes.length !== 0)
+                .filter(([, slashes]) => slashes.length)
             );
           });
         })().catch(console.error);

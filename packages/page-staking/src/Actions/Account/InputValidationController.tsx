@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-staking authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { DeriveBalancesAll } from '@polkadot/api-derive/types';
 import { AccountId, StakingLedger } from '@polkadot/types/interfaces';
@@ -23,21 +22,25 @@ interface ErrorState {
   isFatal: boolean;
 }
 
+const transformBonded = {
+  transform: (value: Option<AccountId>): string | null =>
+    value.isSome
+      ? value.unwrap().toString()
+      : null
+};
+
+const transformStash = {
+  transform: (value: Option<StakingLedger>): string | null =>
+    value.isSome
+      ? value.unwrap().stash.toString()
+      : null
+};
+
 function ValidateController ({ accountId, controllerId, defaultController, onError }: Props): React.ReactElement<Props> | null {
   const { t } = useTranslation();
   const { api } = useApi();
-  const bondedId = useCall<string | null>(controllerId ? api.query.staking.bonded : null, [controllerId], {
-    transform: (value: Option<AccountId>): string | null =>
-      value.isSome
-        ? value.unwrap().toString()
-        : null
-  });
-  const stashId = useCall<string | null>(controllerId ? api.query.staking.ledger : null, [controllerId], {
-    transform: (value: Option<StakingLedger>): string | null =>
-      value.isSome
-        ? value.unwrap().stash.toString()
-        : null
-  });
+  const bondedId = useCall<string | null>(controllerId ? api.query.staking.bonded : null, [controllerId], transformBonded);
+  const stashId = useCall<string | null>(controllerId ? api.query.staking.ledger : null, [controllerId], transformStash);
   const allBalances = useCall<DeriveBalancesAll>(controllerId ? api.derive.balances.all : null, [controllerId]);
   const [{ error, isFatal }, setError] = useState<ErrorState>({ error: null, isFatal: false });
 

@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-accounts authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
 import styled from 'styled-components';
@@ -34,7 +33,7 @@ function Sidebar ({ button, children, className = '', onClose }: Props): React.R
 }
 
 export default React.memo(styled(Sidebar)(({ offset = 0, position }: Props) => `
-  background: #f5f4f3;
+  background: #f5f3f1;
   bottom: 0;
   box-shadow: ${position === 'right' ? '-6px' : '6px'} 0px 20px 0px rgba(0, 0, 0, 0.3);
   margin-left: -0.125rem;
@@ -48,6 +47,7 @@ export default React.memo(styled(Sidebar)(({ offset = 0, position }: Props) => `
   ${position}: ${offset};
 
   .ui--Sidebar-buttons {
+    margin: 0;
     position: absolute;
     right: 0.5rem;
     top: 0.5rem;

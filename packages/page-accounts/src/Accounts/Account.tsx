@@ -1,16 +1,15 @@
 // Copyright 2017-2020 @polkadot/app-accounts authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { SubmittableExtrinsic } from '@polkadot/api/types';
 import { DeriveBalancesAll, DeriveDemocracyLock } from '@polkadot/api-derive/types';
 import { ActionStatus } from '@polkadot/react-components/Status/types';
-import { AccountId, ProxyType, RecoveryConfig } from '@polkadot/types/interfaces';
+import { ProxyDefinition, RecoveryConfig } from '@polkadot/types/interfaces';
 import { KeyringAddress } from '@polkadot/ui-keyring/types';
 import { Delegation } from '../types';
 
 import BN from 'bn.js';
-import React, { useCallback, useContext, useState, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { ApiPromise } from '@polkadot/api';
 import { getLedger } from '@polkadot/react-api';
@@ -22,18 +21,18 @@ import { BN_ZERO, formatBalance, formatNumber } from '@polkadot/util';
 
 import { useTranslation } from '../translate';
 import { createMenuGroup } from '../util';
-import Backup from './modals/Backup';
-import ChangePass from './modals/ChangePass';
-import DelegateModal from './modals/Delegate';
-import Derive from './modals/Derive';
-import IdentityMain from './modals/IdentityMain';
-import IdentitySub from './modals/IdentitySub';
-import ProxyOverview from './modals/ProxyOverview';
-import MultisigApprove from './modals/MultisigApprove';
-import RecoverAccount from './modals/RecoverAccount';
-import RecoverSetup from './modals/RecoverSetup';
-import Transfer from './modals/Transfer';
-import UndelegateModal from './modals/Undelegate';
+import Backup from '../modals/Backup';
+import ChangePass from '../modals/ChangePass';
+import DelegateModal from '../modals/Delegate';
+import Derive from '../modals/Derive';
+import IdentityMain from '../modals/IdentityMain';
+import IdentitySub from '../modals/IdentitySub';
+import ProxyOverview from '../modals/ProxyOverview';
+import MultisigApprove from '../modals/MultisigApprove';
+import RecoverAccount from '../modals/RecoverAccount';
+import RecoverSetup from '../modals/RecoverSetup';
+import Transfer from '../modals/Transfer';
+import UndelegateModal from '../modals/Undelegate';
 import useMultisigApprovals from './useMultisigApprovals';
 import useProxies from './useProxies';
 
@@ -43,7 +42,7 @@ interface Props {
   delegation?: Delegation;
   filter: string;
   isFavorite: boolean;
-  proxy?: [[AccountId, ProxyType][], BN];
+  proxy?: [ProxyDefinition[], BN];
   setBalance: (address: string, value: BN) => void;
   toggleFavorite: (address: string) => void;
 }
@@ -73,22 +72,23 @@ function createClearDemocracyTx (api: ApiPromise, address: string, unlockableIds
   );
 }
 
+const transformRecovery = {
+  transform: (opt: Option<RecoveryConfig>) => opt.unwrapOr(null)
+};
+
 function Account ({ account: { address, meta }, className = '', delegation, filter, isFavorite, proxy, setBalance, toggleFavorite }: Props): React.ReactElement<Props> | null {
   const { t } = useTranslation();
   const { queueExtrinsic } = useContext(StatusContext);
   const api = useApi();
-  const bestNumber = useCall<BN>(api.api.derive.chain.bestNumber, []);
+  const bestNumber = useCall<BN>(api.api.derive.chain.bestNumber);
   const balancesAll = useCall<DeriveBalancesAll>(api.api.derive.balances.all, [address]);
   const democracyLocks = useCall<DeriveDemocracyLock[]>(api.api.derive.democracy?.locks, [address]);
-  const recoveryInfo = useCall<RecoveryConfig | null>(api.api.query.recovery?.recoverable, [address], {
-    transform: (opt: Option<RecoveryConfig>) => opt.unwrapOr(null)
-  });
+  const recoveryInfo = useCall<RecoveryConfig | null>(api.api.query.recovery?.recoverable, [address], transformRecovery);
   const multiInfos = useMultisigApprovals(address);
   const proxyInfo = useProxies(address);
   const { flags: { isDevelopment, isExternal, isHardware, isInjected, isMultisig, isProxied }, genesisHash, identity, name: accName, onSetGenesisHash, tags } = useAccountInfo(address);
   const [{ democracyUnlockTx }, setUnlockableIds] = useState<DemocracyUnlockable>({ democracyUnlockTx: null, ids: [] });
   const [vestingVestTx, setVestingTx] = useState<SubmittableExtrinsic<'promise'> | null>(null);
-  const [isVisible, setIsVisible] = useState(true);
   const [isBackupOpen, toggleBackup] = useToggle();
   const [isDeriveOpen, toggleDerive] = useToggle();
   const [isForgetOpen, toggleForget] = useToggle();
@@ -107,6 +107,7 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
   useEffect((): void => {
     if (balancesAll) {
       setBalance(address, balancesAll.freeBalance.add(balancesAll.reservedBalance));
+
       api.api.tx.vesting?.vest && setVestingTx(() =>
         balancesAll.vestingLocked.isZero()
           ? null
@@ -114,12 +115,6 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
       );
     }
   }, [address, api, balancesAll, setBalance]);
-
-  useEffect((): void => {
-    setIsVisible(
-      calcVisible(filter, accName, tags)
-    );
-  }, [accName, filter, tags]);
 
   useEffect((): void => {
     bestNumber && democracyLocks && setUnlockableIds(
@@ -139,6 +134,11 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
       }
     );
   }, [address, api, bestNumber, democracyLocks]);
+
+  const isVisible = useMemo(
+    () => calcVisible(filter, accName, tags),
+    [accName, filter, tags]
+  );
 
   const _onFavorite = useCallback(
     () => toggleFavorite(address),
@@ -185,16 +185,16 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
   );
 
   const _showOnHardware = useCallback(
+    // TODO: we should check the hardwareType from metadata here as well,
+    // for now we are always assuming hardwareType === 'ledger'
     (): void => {
-      // TODO: we should check the hardwareType from metadata here as well,
-      // for now we are always assuming hardwareType === 'ledger'
       getLedger()
-        .getAddress(true)
+        .getAddress(true, meta.accountOffset as number || 0, meta.addressOffset as number || 0)
         .catch((error): void => {
           console.error(`ledger: ${(error as Error).message}`);
         });
     },
-    []
+    [meta]
   );
 
   if (!isVisible) {
@@ -383,7 +383,7 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
           />
         )}
       </td>
-      <td className='address ui--media-1400'>
+      <td className='address media--1400'>
         {meta.parentAddress && (
           <AddressMini value={meta.parentAddress} />
         )}
@@ -396,7 +396,7 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
           <Tags value={tags} />
         </div>
       </td>
-      <td className='number ui--media-1500'>
+      <td className='number media--1500'>
         {balancesAll?.accountNonce.gt(BN_ZERO) && formatNumber(balancesAll.accountNonce)}
       </td>
       <td className='number'>
@@ -408,11 +408,13 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
         />
       </td>
       <td className='button'>
-        <Button
-          icon='paper-plane'
-          label={t<string>('send')}
-          onClick={toggleTransfer}
-        />
+        {api.api.tx.balances?.transfer && (
+          <Button
+            icon='paper-plane'
+            label={t<string>('send')}
+            onClick={toggleTransfer}
+          />
+        )}
         <Popup
           className='theme--default'
           isOpen={isSettingsOpen}
@@ -574,12 +576,12 @@ function Account ({ account: { address, meta }, className = '', delegation, filt
           </Menu>
         </Popup>
       </td>
-      <td className='mini ui--media-1400'>
+      <td className='links media--1400'>
         <LinkExternal
           className='ui--AddressCard-exporer-link'
           data={address}
+          isLogo
           type='address'
-          withShort
         />
       </td>
     </tr>
