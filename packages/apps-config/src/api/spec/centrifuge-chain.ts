@@ -32,10 +32,11 @@ export default {
     depositor: 'AccountId'
   },
   Address: 'GenericAddress',
-  LookupSource: 'GenericAddress',
+  LookupSource: 'GenericLookupSource',
   // Bridge constants
   ChainId: 'u8',
   ResourceId: '[u8; 32]',
   'chainbridge::ChainId': 'u8',
-  DepositNonce: 'u64'
+  DepositNonce: 'u64',
+  Weight: 'u64'
 };
