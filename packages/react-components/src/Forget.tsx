@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-accounts authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
 import { AddressRow, Button, Modal } from '@polkadot/react-components';
@@ -93,7 +92,6 @@ function Forget (props: Props): React.ReactElement<Props> {
       <Modal.Actions onCancel={onClose}>
         <Button
           icon='trash'
-          isPrimary
           label={t<string>('Forget')}
           onClick={onForget}
         />

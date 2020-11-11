@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-staking authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { ValidateInfo } from '../partials/types';
 
@@ -25,7 +24,7 @@ function Validate ({ controllerId, onClose, stashId }: Props): React.ReactElemen
       header={t<string>('Set validator preferences')}
       size='large'
     >
-      <Modal.Content className='ui--signer-Signer-Content'>
+      <Modal.Content>
         <ValidatePartial
           controllerId={controllerId}
           onChange={setTx}
@@ -39,7 +38,6 @@ function Validate ({ controllerId, onClose, stashId }: Props): React.ReactElemen
           extrinsic={validateTx}
           icon='certificate'
           isDisabled={!validateTx}
-          isPrimary
           label={t<string>('Validate')}
           onStart={onClose}
         />

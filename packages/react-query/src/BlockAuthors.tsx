@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/react-query authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { EraRewardPoints } from '@polkadot/types/interfaces';
 
@@ -22,7 +21,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const MAX_HEADERS = 50;
+const MAX_HEADERS = 75;
 
 const byAuthor: Record<string, string> = {};
 const eraPoints: Record<string, string> = {};
@@ -31,7 +30,7 @@ const ValidatorsContext: React.Context<string[]> = React.createContext<string[]>
 
 function BlockAuthorsBase ({ children }: Props): React.ReactElement<Props> {
   const { api, isApiReady } = useApi();
-  const queryPoints = useCall<EraRewardPoints>(isApiReady && api.derive.staking?.currentPoints, []);
+  const queryPoints = useCall<EraRewardPoints>(isApiReady && api.derive.staking?.currentPoints);
   const [state, setState] = useState<Authors>({ byAuthor, eraPoints, lastBlockAuthors: [], lastHeaders: [] });
   const [validators, setValidators] = useState<string[]>([]);
 
@@ -66,7 +65,7 @@ function BlockAuthorsBase ({ children }: Props): React.ReactElement<Props> {
           }
 
           lastHeaders = lastHeaders
-            .filter((old, index): boolean => index < MAX_HEADERS && old.number.unwrap().lt(blockNumber))
+            .filter((old, index) => index < MAX_HEADERS && old.number.unwrap().lt(blockNumber))
             .reduce((next, header): HeaderExtended[] => {
               next.push(header);
 

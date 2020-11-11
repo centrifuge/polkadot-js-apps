@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { VoidFn } from './types';
 
@@ -29,6 +28,7 @@ interface Props {
   isHidden?: boolean;
   isInPlaceEditor?: boolean;
   isReadOnly?: boolean;
+  isSmall?: boolean;
   isWarning?: boolean;
   label?: React.ReactNode;
   labelExtra?: React.ReactNode;
@@ -52,10 +52,10 @@ interface Props {
   withEllipsis?: boolean;
 }
 
-// Find decimal separator used in current locale
-const getDecimalSeparator = (): string => 1.1
-  .toLocaleString()
-  .replace(/\d/g, '');
+// // Find decimal separator used in current locale
+// const getDecimalSeparator = (): string => 1.1
+//   .toLocaleString()
+//   .replace(/\d/g, '');
 
 // note: KeyboardEvent.keyCode and KeyboardEvent.which are deprecated
 const KEYS = {
@@ -67,7 +67,7 @@ const KEYS = {
   C: 'c',
   CMD: 'Meta',
   CTRL: 'Control',
-  DECIMAL: getDecimalSeparator(),
+  // DECIMAL: getDecimalSeparator(),
   ENTER: 'Enter',
   ESCAPE: 'Escape',
   TAB: 'Tab',
@@ -197,6 +197,7 @@ function Input ({ autoFocus = false, children, className, defaultValue, help, ic
               : 'off'
           }
           autoCorrect='off'
+          data-testid={label}
           onPaste={_onPaste}
           spellCheck={false}
         />

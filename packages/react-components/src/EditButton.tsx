@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { VoidFn } from './types';
@@ -29,7 +28,6 @@ function EditButton ({ children, className, icon = 'edit', onClick }: Props): Re
         <Icon
           className='icon-button'
           icon={icon}
-          isPrimary
         />
       </span>
     </div>

@@ -1,9 +1,10 @@
 // Copyright 2017-2020 @polkadot/react-query authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
+
+import { ThemeProps } from '@polkadot/react-components/types';
 
 import BN from 'bn.js';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Compact } from '@polkadot/types';
 import { formatBalance } from '@polkadot/util';
@@ -11,11 +12,13 @@ import { formatBalance } from '@polkadot/util';
 import { useTranslation } from './translate';
 
 interface Props {
+  children?: React.ReactNode;
   className?: string;
   isShort?: boolean;
   label?: React.ReactNode;
   labelPost?: string;
   value?: Compact<any> | BN | string | null | 'all';
+  withCurrency?: boolean;
   withSi?: boolean;
 }
 
@@ -23,21 +26,24 @@ interface Props {
 const M_LENGTH = 6 + 1;
 const K_LENGTH = 3 + 1;
 
-function format (value: Compact<any> | BN | string, currency: string, withSi?: boolean, _isShort?: boolean, labelPost?: string): React.ReactNode {
+function format (value: Compact<any> | BN | string, withCurrency = true, withSi?: boolean, _isShort?: boolean, labelPost?: string): React.ReactNode {
   const [prefix, postfix] = formatBalance(value, { forceUnit: '-', withSi: false }).split('.');
   const isShort = _isShort || (withSi && prefix.length >= K_LENGTH);
+  const unitPost = withCurrency ? formatBalance.getDefaults().unit : '';
 
   if (prefix.length > M_LENGTH) {
-    // TODO Format with balance-postfix
-    return `${formatBalance(value)}${labelPost || ''}`;
+    const [major, rest] = formatBalance(value, { withUnit: false }).split('.');
+    const minor = rest.substr(0, 4);
+    const unit = rest.substr(4);
+
+    return <>{major}.<span className='ui--FormatBalance-postfix'>{minor}</span><span className='ui--FormatBalance-unit'>{unit}{unit ? unitPost : ` ${unitPost}`}</span>{labelPost || ''}</>;
   }
 
-  return <>{`${prefix}${isShort ? '' : '.'}`}{!isShort && (<><span className='ui--FormatBalance-postfix'>{`000${postfix || ''}`.slice(-3)}</span></>)} {`${currency}${labelPost || ''}`}</>;
+  return <>{`${prefix}${isShort ? '' : '.'}`}{!isShort && <span className='ui--FormatBalance-postfix'>{`0000${postfix || ''}`.slice(-4)}</span>}<span className='ui--FormatBalance-unit'> {unitPost}</span>{labelPost || ''}</>;
 }
 
-function FormatBalance ({ className = '', isShort, label, labelPost, value, withSi }: Props): React.ReactElement<Props> {
+function FormatBalance ({ children, className = '', isShort, label, labelPost, value, withCurrency, withSi }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
-  const [currency] = useState(formatBalance.getDefaults().unit);
 
   // labelPost here looks messy, however we ensure we have one less text node
   return (
@@ -46,14 +52,14 @@ function FormatBalance ({ className = '', isShort, label, labelPost, value, with
         value
           ? value === 'all'
             ? t<string>('everything{{labelPost}}', { replace: { labelPost } })
-            : format(value, currency, withSi, isShort, labelPost)
+            : format(value, withCurrency, withSi, isShort, labelPost)
           : `-${labelPost || ''}`
-      }</span>
+      }</span>{children}
     </div>
   );
 }
 
-export default React.memo(styled(FormatBalance)`
+export default React.memo(styled(FormatBalance)(({ theme }: ThemeProps) => `
   display: inline-block;
   vertical-align: baseline;
   white-space: nowrap;
@@ -69,22 +75,30 @@ export default React.memo(styled(FormatBalance)`
     vertical-align: baseline;
   }
 
+  .ui--FormatBalance-unit {
+    font-size: 0.825em;
+  }
+
   .ui--FormatBalance-value {
     text-align: right;
 
     > .ui--FormatBalance-postfix {
-      font-weight: 100;
-      opacity: 0.75;
+      font-weight: ${theme.fontWeightLight};
+      opacity: 0.7;
       vertical-align: baseline;
     }
   }
 
+  > .ui--Button {
+    margin-left: 0.25rem;
+  }
+
   .ui--Icon {
-    margin-top: 0.25rem;
     margin-bottom: -0.25rem;
+    margin-top: 0.25rem;
   }
 
   .ui--Icon+.ui--FormatBalance-value {
     margin-left: 0.375rem;
   }
-`);
+`));

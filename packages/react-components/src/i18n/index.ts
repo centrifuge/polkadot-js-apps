@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -43,27 +42,25 @@ i18next
       'apps-config',
       'apps-electron',
       'apps-routing',
-      'app-123code',
       'app-accounts',
       'app-claims',
       'app-contracts',
       'app-council',
-      'app-dashboard',
       'app-democracy',
       'app-explorer',
       'app-extrinsics',
       'app-generic-asset',
-      'app-i18n',
       'app-js',
       'app-parachains',
       'app-poll',
+      'app-rpc',
       'app-settings',
+      'app-signing',
       'app-society',
       'app-staking',
       'app-storage',
       'app-sudo',
       'app-tech-comm',
-      'app-toolbox',
       'app-treasury',
       'react-api',
       'react-components',

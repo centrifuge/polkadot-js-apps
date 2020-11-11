@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-claims authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -90,7 +89,6 @@ function Attest ({ accountId, className, ethereumAddress, onSuccess, statementKi
             accountId={accountId}
             icon='paper-plane'
             isDisabled={!statementSentence}
-            isPrimary
             label={t<string>('I agree')}
             onSuccess={onSuccess}
             params={[statementSentence]}

@@ -1,10 +1,9 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
-import { css } from 'styled-components';
+import { ThemeDef } from '../types';
 
-export default css`
+export default (theme: ThemeDef): string => `
   .ui.hidden.divider {
     margin: 0.5rem 0;
   }
@@ -21,8 +20,20 @@ export default css`
   }
 
   .ui.selection.dropdown,
-  .ui.input > input {
-    color: inherit;
+  .ui.input > input,
+  .ui.selection.dropdown > input {
+    background: ${theme.bgInput};
+    color: ${theme.color};
+    font-family: ${theme.fontSans};
+
+    &:focus {
+      background: ${theme.bgInput};
+      color: ${theme.color};
+    }
+  }
+
+  .ui.action.input > .buttons {
+    position: relative;
   }
 
   .ui.dropdown {
@@ -36,19 +47,38 @@ export default css`
       }
     }
 
+    &.selection.visible {
+      background: ${theme.bgInput};
+      color: ${theme.color};
+    }
+
+    .menu {
+      background: ${theme.bgInput};
+      color: ${theme.color};
+
+      > .item {
+        border-color: transparent !important;
+        color: ${theme.color} !important;
+
+        &.header.disabled {
+          margin: 1em 0 0 0;
+          opacity: 1;
+
+          &:hover,
+          &.selected {
+            background: ${theme.bgInput};
+          }
+        }
+      }
+    }
+
     > .text {
       min-height: 1em;
+
+      &:not(.default) {
+        color: ${theme.color} !important;
+      }
     }
-  }
-
-  .ui.dropdown .menu > .item.header.disabled {
-    margin: 1em 0 0 0;
-    opacity: 1;
-  }
-
-  .ui.dropdown .menu > .item.header.disabled:hover,
-  .ui.dropdown .menu > .item.header.disabled.selected {
-    background: white;
   }
 
   .ui.input {
@@ -65,7 +95,6 @@ export default css`
       .ui.primary.buttons .ui.button {
         background-color: #666;
         border-color: transparent;
-        border-left-color: transparent;
         color: #f9f8f7;
         opacity: 0.5;
 
@@ -75,8 +104,8 @@ export default css`
       }
     }
 
-    &.disabled.error input {
-      background-color: #fff6f6;
+    &.error input {
+      background-color: ${theme.bgInputError};
       border-color: #e0b4b4;
     }
 
@@ -85,18 +114,18 @@ export default css`
     }
   }
 
-  .ui.label:not(.ui--Bubble) {
+  .ui.label {
     background: transparent;
-    font-weight: normal;
+    font-weight: 400;
     position: relative;
     z-index: 1;
   }
 
   .ui.modal {
-    background: #f9f8f7;
+    background: ${theme.bgPage};
     box-shadow: none;
-    color: #4e4e4e;
-    font-family: sans-serif;
+    color: ${theme.color};
+    font-family: ${theme.fontSans};
 
     > .actions,
     > .content {
@@ -106,17 +135,17 @@ export default css`
     > .actions {
       border-top: none;
       text-align: right;
-      padding: 1rem !important;
+      padding: 0 1rem !important;
     }
 
     /* approx h1, color, size, font */
     > .header:not(.ui) {
       background: transparent;
       border-bottom: none;
-      color: rgba(0, 0, 0, .6);
-      font-family: sans-serif;
+      color: ${theme.colorSummary};
+      font-family: ${theme.fontSans};
       font-size: 1.75rem;
-      font-weight: 100;
+      font-weight: 400;
       line-height: 1.25rem;
       padding: 1.5rem 1.75rem 0;
       text-transform: lowercase;
@@ -128,7 +157,7 @@ export default css`
 
     .description {
       margin: 1.5em 0;
-      font-weight: 700;
+      font-weight: 400;
     }
   }
 
@@ -136,13 +165,12 @@ export default css`
     display: flex !important;
   }
 
-  .ui.progress {
-    &.tiny {
-      font-size: .5rem;
-    }
+  .ui.popup {
+    background: ${theme.bgMenu};
+    color: ${theme.color};
 
-    .bar {
-      min-width: 0 !important;
+    .ui.text.menu .item {
+      color: ${theme.color};
     }
   }
 
@@ -157,14 +185,6 @@ export default css`
   .ui[class*="left icon"].input.left.icon > .ui--Icon.big {
     left: -7px;
     opacity: 1;
-  }
-
-  .ui.button:disabled,
-  .ui.buttons .disabled.button,
-  .ui.disabled.active.button,
-  .ui.disabled.button,
-  .ui.disabled.button:hover {
-    opacity: 0.2 !important;
   }
 
   /* modals aligned to top, not center */

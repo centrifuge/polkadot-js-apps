@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-claims authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { Option } from '@polkadot/types';
 import { BalanceOf, EthereumAddress, StatementKind } from '@polkadot/types/interfaces';
@@ -87,7 +86,6 @@ function Claim ({ accountId, className = '', ethereumAddress, ethereumSignature,
               <Button.Group>
                 <TxButton
                   icon='paper-plane'
-                  isPrimary
                   isUnsigned
                   label={t('Claim')}
                   onSuccess={onSuccess}
@@ -129,7 +127,7 @@ h2 {
   margin: 0.5rem 0 2rem;
   font-family: monospace;
   font-size: 2.5rem;
-  font-weight: 200;
+  font-weight: 400;
 }
 `;
 

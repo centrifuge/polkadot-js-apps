@@ -1,11 +1,13 @@
 // Copyright 2017-2020 @polkadot/app-accounts authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import React, { useCallback, useMemo } from 'react';
+import { ThemeProps } from '@polkadot/react-components/types';
 import styled from 'styled-components';
 import { Button, IdentityIcon } from '@polkadot/react-components';
 import { u8aToHex } from '@polkadot/util';
+
+import { useTranslation } from '../translate';
 
 interface Props {
   address: string;
@@ -18,16 +20,18 @@ interface Props {
 }
 
 function Match ({ address, className = '', count, offset, onCreateToggle, onRemove, seed }: Props): React.ReactElement<Props> {
+  const { t } = useTranslation();
+
   const hexSeed = useMemo(
     () => u8aToHex(seed),
     [seed]
   );
   const _onCreate = useCallback(
-    (): void => onCreateToggle(hexSeed),
+    () => onCreateToggle(hexSeed),
     [hexSeed, onCreateToggle]
   );
   const _onRemove = useCallback(
-    (): void => onRemove(address),
+    () => onRemove(address),
     [address, onRemove]
   );
 
@@ -53,12 +57,11 @@ function Match ({ address, className = '', count, offset, onCreateToggle, onRemo
       <td className='button'>
         <Button
           icon='plus'
-          isPrimary
+          label={t<string>('Save')}
           onClick={_onCreate}
         />
         <Button
           icon='times'
-          isNegative
           onClick={_onRemove}
         />
       </td>
@@ -74,7 +77,7 @@ export default React.memo(styled(Match)`
   }
 
   .vanity--Match-addr {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
 
     .no {
       color: inherit;
@@ -94,7 +97,7 @@ export default React.memo(styled(Match)`
 
   .vanity--Match-item {
     display: inline-block;
-    font-family: monospace;
+    font-family: ${({ theme }: ThemeProps) => theme.fontMono};
     margin: 0 auto;
     padding: 0.5em;
     position: relative;

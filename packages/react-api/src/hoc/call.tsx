@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/react-api authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 // SInce this file is deemed deprecated (and awaiting removal), we just don't care
 
@@ -106,12 +105,12 @@ export default function withCall<P extends ApiProps> (endpoint: string, {
 
         // The attachment takes time when a lot is available, set a timeout
         // to first handle the current queue before subscribing
-        setImmediate((): void => {
+        setTimeout((): void => {
           this
             .subscribe(this.getParams(this.props))
             .then(NOOP)
             .catch(NOOP);
-        });
+        }, 0);
       }
 
       public componentWillUnmount (): void {

@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-council authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { SubmittableExtrinsic } from '@polkadot/api/types';
 
@@ -11,6 +10,7 @@ import { useApi, useToggle } from '@polkadot/react-hooks';
 import { BN_ZERO } from '@polkadot/util';
 
 import { useTranslation } from '../translate';
+import { getThreshold } from '../thresholds';
 
 interface Props {
   isMember: boolean;
@@ -38,9 +38,9 @@ function Propose ({ isMember, members }: Props): React.ReactElement<Props> {
   useEffect((): void => {
     members && setThreshold({
       isThresholdValid: members.length !== 0,
-      threshold: new BN(Math.ceil(members.length * 0.5))
+      threshold: new BN(Math.ceil(members.length * getThreshold(api)))
     });
-  }, [members]);
+  }, [api, members]);
 
   const _setMethod = useCallback(
     (proposal?: SubmittableExtrinsic<'promise'> | null) => setProposal({

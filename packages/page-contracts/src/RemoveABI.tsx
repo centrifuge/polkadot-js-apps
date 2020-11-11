@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-accounts authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { CodeStored } from '@polkadot/app-contracts/types';
 
@@ -45,7 +44,6 @@ function RemoveABI ({ code, onClose, onRemove }: Props): React.ReactElement<Prop
       <Modal.Actions onCancel={onClose}>
         <Button
           icon='trash'
-          isPrimary
           label={t<string>('Remove')}
           onClick={_onRemove}
         />

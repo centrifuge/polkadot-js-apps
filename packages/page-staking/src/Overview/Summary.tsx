@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-staking authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { DeriveStakingOverview } from '@polkadot/api-derive/types';
 
@@ -29,16 +28,22 @@ function Summary ({ className = '', isVisible, next, nominators, stakingOverview
       <section>
         {stakingOverview && (
           <CardSummary label={t<string>('validators')}>
-            {stakingOverview.validators.length}{`/${stakingOverview.validatorCount.toString()}`}
+            {stakingOverview.validators.length}&nbsp;/&nbsp;{stakingOverview.validatorCount.toString()}
           </CardSummary>
         )}
         {!!next?.length && (
-          <CardSummary label={t<string>('waiting')}>
+          <CardSummary
+            className='media--1000'
+            label={t<string>('waiting')}
+          >
             {next.length}
           </CardSummary>
         )}
         {!!nominators?.length && (
-          <CardSummary label={t<string>('nominators')}>
+          <CardSummary
+            className='media--1100'
+            label={t<string>('nominators')}
+          >
             {nominators.length}
           </CardSummary>
         )}

@@ -1,6 +1,5 @@
 // Copyright 2019 @polkadot/app-generic-asset authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import React, { useCallback } from 'react';
 import { Card, Button } from '@polkadot/react-components';
@@ -37,7 +36,6 @@ function AssetCard ({ assetId, className = '', name, onForget, onSaveName }: Pro
           buttons={(
             <Button
               icon='trash'
-              isNegative
               key='forget'
               onClick={_onForget}
               tooltip={t<string>('Forget this asset')}

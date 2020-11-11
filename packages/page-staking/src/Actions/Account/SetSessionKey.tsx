@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-staking authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { SessionInfo } from '../partials/types';
 
@@ -39,7 +38,6 @@ function SetSessionKey ({ controllerId, onClose, stashId }: Props): React.ReactE
           extrinsic={sessionTx}
           icon='sign-in-alt'
           isDisabled={!sessionTx}
-          isPrimary
           label={t<string>('Set Session Key')}
           onStart={onClose}
         />

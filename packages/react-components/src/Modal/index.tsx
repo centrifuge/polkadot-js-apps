@@ -1,10 +1,11 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
+import { ThemeDef } from '@polkadot/react-components/types';
 import { ActionsProps, ColumnProps, ModalProps } from './types';
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 import SUIModal from 'semantic-ui-react/dist/commonjs/modules/Modal/Modal';
 
 import Actions from './Actions';
@@ -21,12 +22,13 @@ type ModalType = React.FC<ModalProps> & {
 };
 
 function ModalBase (props: ModalProps): React.ReactElement<ModalProps> {
+  const { theme } = useContext<ThemeDef>(ThemeContext);
   const { children, className = '', header, open = true } = props;
 
   return (
     <SUIModal
       {...props}
-      className={`theme--default ui--Modal ${className}`}
+      className={`theme--${theme} ui--Modal ${className}`}
       header={undefined}
       open={open}
     >
