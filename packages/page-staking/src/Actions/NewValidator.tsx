@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-staking authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { BondInfo, SessionInfo, ValidateInfo } from './partials/types';
 
@@ -102,7 +101,6 @@ function NewValidator ({ isInElection }: Props): React.ReactElement<Props> {
                   accountId={stashId}
                   icon='sign-in-alt'
                   isDisabled={!bondTx || !sessionTx || !validateTx}
-                  isPrimary
                   label={t<string>('Bond & Validate')}
                   onStart={_toggle}
                   params={[
@@ -117,7 +115,6 @@ function NewValidator ({ isInElection }: Props): React.ReactElement<Props> {
                 <Button
                   icon='step-forward'
                   isDisabled={!bondTx}
-                  isPrimary
                   label={t<string>('next')}
                   onClick={_nextStep}
                 />

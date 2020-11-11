@@ -1,9 +1,7 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { MAX_PASS_LEN } from '@polkadot/ui-keyring/defaults';
 
 import Input from './Input';
 
@@ -39,7 +37,6 @@ function Password ({ autoFocus, children, className = '', defaultValue, help, is
       isFull={isFull}
       label={label}
       labelExtra={labelExtra}
-      maxLength={MAX_PASS_LEN}
       name={name}
       onChange={onChange}
       onEnter={onEnter}

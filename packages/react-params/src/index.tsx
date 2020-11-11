@@ -1,6 +1,5 @@
-// Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// Copyright 2017-2020 @polkadot/react-params authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 import { I18nProps } from '@polkadot/react-components/types';
 import { ComponentMap, ParamDef, RawParam, RawParams, RawParamOnChangeValue } from './types';
@@ -104,8 +103,8 @@ class Params extends React.PureComponent<Props, State> {
                 type={type}
               />
             ))}
+            {children}
           </div>
-          {children}
         </ErrorBoundary>
       </Holder>
     );

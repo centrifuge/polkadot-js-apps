@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { Address, AccountId } from '@polkadot/types/interfaces';
 
@@ -54,34 +53,38 @@ export default React.memo(styled(AddressSmall)`
 
   .ui--AccountName {
     display: inline-block;
-    max-width: 24rem;
+    max-width: 26rem;
     overflow: hidden;
 
     &.withSidebar {
       cursor: help;
     }
 
-    @media only screen and (max-width: 1800px) {
-      max-width: 22rem;
-    }
-
     @media only screen and (max-width: 1700px) {
-      max-width: 20rem;
+      max-width: 24rem;
     }
 
     @media only screen and (max-width: 1600px) {
-      max-width: 18rem;
+      max-width: 22rem;
     }
 
     @media only screen and (max-width: 1500px) {
-      max-width: 16rem;
+      max-width: 20rem;
     }
 
     @media only screen and (max-width: 1400px) {
-      max-width: 14rem;
+      max-width: 18rem;
     }
 
     @media only screen and (max-width: 1300px) {
+      max-width: 16rem;
+    }
+
+    @media only screen and (max-width: 1200px) {
+      max-width: 14rem;
+    }
+
+    @media only screen and (max-width: 1200px) {
       max-width: 12rem;
     }
   }

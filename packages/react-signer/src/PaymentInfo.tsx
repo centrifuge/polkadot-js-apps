@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/react-signer authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { RuntimeDispatchInfo } from '@polkadot/types/interfaces';
@@ -29,7 +28,7 @@ function PaymentInfo ({ accountId, className = '', extrinsic }: Props): React.Re
   useEffect((): void => {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     accountId && extrinsic && isFunction(extrinsic.paymentInfo) && isFunction(api.rpc.payment?.queryInfo) &&
-      setImmediate((): void => {
+      setTimeout((): void => {
         try {
           extrinsic
             .paymentInfo(accountId)
@@ -38,7 +37,7 @@ function PaymentInfo ({ accountId, className = '', extrinsic }: Props): React.Re
         } catch (error) {
           console.error((error as Error).message);
         }
-      });
+      }, 0);
   }, [api, accountId, extrinsic, mountedRef]);
 
   if (!dispatchInfo) {
@@ -53,7 +52,6 @@ function PaymentInfo ({ accountId, className = '', extrinsic }: Props): React.Re
           Fees of <span className='highlight'>{formatBalance(dispatchInfo.partialFee, { withSiFull: true })}</span> will be applied to the submission
         </Trans>
       }
-      withDot
     />
   );
 }

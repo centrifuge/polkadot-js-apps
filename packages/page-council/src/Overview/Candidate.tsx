@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-democracy authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { AccountId, Balance } from '@polkadot/types/interfaces';
 
@@ -35,12 +34,10 @@ function Candidate ({ address, balance, className = '', isPrime, voters }: Props
           />
         )}
       </td>
-      <td className='all number'>
-        <Voters
-          balance={balance}
-          voters={voters}
-        />
-      </td>
+      <Voters
+        balance={balance}
+        voters={voters}
+      />
     </tr>
   );
 }

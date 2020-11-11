@@ -1,9 +1,7 @@
 // Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { WithTranslation } from 'react-i18next';
-import { ButtonProps as SUIButtonProps } from 'semantic-ui-react/dist/commonjs/elements/Button/Button';
 import { IconName } from '@fortawesome/fontawesome-svg-core';
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { Abi } from '@polkadot/api-contract';
@@ -13,6 +11,8 @@ import { AccountId, Index } from '@polkadot/types/interfaces';
 import { ButtonProps } from './Button/types';
 import { InputAddressProps } from './InputAddress/types';
 import { TxCallback, TxFailedCallback } from './Status/types';
+
+export type StringOrNull = string | null;
 
 export type VoidFn = () => void;
 
@@ -32,14 +32,14 @@ export type I18nProps = BareProps & WithTranslation;
 
 export type ConstructTxFn = () => any[];
 
-export type TxTrigger = React.ComponentType<TxTriggerProps>;
-
 export interface TxTriggerProps {
   onOpen: () => void;
 }
 
+export type TxTrigger = React.ComponentType<TxTriggerProps>;
+
 export interface TxProps {
-  extrinsic?: SubmittableExtrinsic | null;
+  extrinsic?: SubmittableExtrinsic | SubmittableExtrinsic[] | null;
   tx?: string;
   params?: any[] | ConstructTxFn;
 }
@@ -57,12 +57,11 @@ export interface TxButtonProps extends TxProps {
   accountNonce?: Index;
   className?: string;
   icon?: IconName;
-  iconSize?: SUIButtonProps['size'];
   isBasic?: boolean;
+  isBusy?: boolean;
   isDisabled?: boolean;
   isIcon?: boolean;
-  isNegative?: boolean;
-  isPrimary?: boolean;
+  isToplevel?: boolean;
   isUnsigned?: boolean;
   label?: React.ReactNode;
   onClick?: VoidFn;
@@ -71,8 +70,8 @@ export interface TxButtonProps extends TxProps {
   onStart?: VoidFn;
   onSuccess?: TxCallback;
   onUpdate?: TxCallback;
-  size?: SUIButtonProps['size'];
   tooltip?: string;
+  withoutLink?: boolean;
   withSpinner?: boolean;
 }
 
@@ -107,8 +106,6 @@ export interface TxModalProps extends I18nProps, TxState {
 
 export type BitLength = 8 | 16 | 32 | 64 | 128 | 256;
 
-export type StringOrNull = string | null;
-
 interface ContractBase {
   abi: Abi;
 }
@@ -126,4 +123,32 @@ export type CallContract = ContractDeployed;
 export interface NullContract {
   abi: null;
   address: null;
+}
+
+export interface ThemeDef {
+  bgInput: string;
+  bgInputError: string;
+  bgInverse: string;
+  bgMenu: string;
+  bgMenuHover: string;
+  bgPage: string;
+  bgTable: string;
+  bgTabs: string;
+  bgToggle: string;
+  borderTable: string;
+  borderTabs: string;
+  color: string;
+  colorCheckbox: string;
+  colorError: string;
+  colorLabel: string;
+  colorSummary: string;
+  fontSans: string;
+  fontMono: string;
+  fontWeightLight: number;
+  fontWeightNormal: number;
+  theme: 'dark' | 'light';
+}
+
+export interface ThemeProps {
+  theme: ThemeDef;
 }

@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-democracy authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { SubmittableExtrinsic } from '@polkadot/api/types';
 import { Hash, VoteThreshold } from '@polkadot/types/interfaces';
@@ -37,7 +36,7 @@ function Fasttrack ({ imageHash, threshold }: Props): React.ReactElement<Props> 
   const [votingBlocks, setVotingBlocks] = useState<BN | undefined>(DEF_VOTING);
   const [{ proposal, proposalLength }, setProposal] = useState<ProposalState>({ proposalLength: 0 });
   const memberThreshold = useMemo(
-    () => Math.ceil(members.length * 0.5),
+    () => Math.ceil(members.length * 0.66),
     [members]
   );
 
@@ -94,7 +93,6 @@ function Fasttrack ({ imageHash, threshold }: Props): React.ReactElement<Props> 
               accountId={accountId}
               icon='fast-forward'
               isDisabled={!accountId || !proposal || !memberThreshold}
-              isPrimary
               label={t<string>('Fast track')}
               onStart={toggleFasttrack}
               params={

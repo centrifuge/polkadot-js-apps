@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-council authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { SubmittableExtrinsic } from '@polkadot/api/types';
 
@@ -10,6 +9,7 @@ import { useApi, useToggle } from '@polkadot/react-hooks';
 import { isHex } from '@polkadot/util';
 
 import { useTranslation } from '../translate';
+import { getThreshold } from '../thresholds';
 
 interface Props {
   className?: string;
@@ -21,6 +21,7 @@ interface HashState {
   hash?: string;
   isHashValid: boolean;
 }
+
 interface ProposalState {
   proposal?: SubmittableExtrinsic<'promise'> | null;
   proposalLength: number;
@@ -33,7 +34,8 @@ function ProposeExternal ({ className = '', isMember, members }: Props): React.R
   const [accountId, setAcountId] = useState<string | null>(null);
   const [{ proposal, proposalLength }, setProposal] = useState<ProposalState>({ proposalLength: 0 });
   const [{ hash, isHashValid }, setHash] = useState<HashState>({ hash: '', isHashValid: false });
-  const threshold = Math.ceil((members.length || 0) * 0.5);
+
+  const threshold = Math.ceil((members.length || 0) * getThreshold(api));
 
   const _onChangeHash = useCallback(
     (hash?: string): void => setHash({ hash, isHashValid: isHex(hash, 256) }),
@@ -106,7 +108,6 @@ function ProposeExternal ({ className = '', isMember, members }: Props): React.R
               accountId={accountId}
               icon='plus'
               isDisabled={!threshold || !members.includes(accountId || '') || !proposal}
-              isPrimary
               label={t<string>('Propose')}
               onStart={toggleVisible}
               params={

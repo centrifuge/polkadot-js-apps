@@ -1,6 +1,5 @@
 // Copyright 2017-2020 @polkadot/app-contracts authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// SPDX-License-Identifier: Apache-2.0
 
 import { I18nProps } from '@polkadot/react-components/types';
 
@@ -151,7 +150,6 @@ export default class TxModal<P extends TxModalProps, S extends TxModalState> ext
         )}
         icon='sign-in-alt'
         isDisabled={this.isDisabled()}
-        isPrimary
         label={this.submitLabel()}
         onClick={this.onSubmit}
         onFailed={this.onFailed}

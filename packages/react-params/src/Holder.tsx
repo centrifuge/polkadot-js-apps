@@ -1,8 +1,8 @@
-// Copyright 2017-2020 @polkadot/react-components authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
+// Copyright 2017-2020 @polkadot/react-params authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import { ThemeProps } from '@polkadot/react-components/types';
 import styled from 'styled-components';
 
 interface Props {
@@ -36,7 +36,7 @@ export default React.memo(styled(Holder)`
 
   .ui--Param .ui--Labelled label {
     text-transform: none !important;
-    font-family: monospace;
+    font-family: ${({ theme }: ThemeProps) => theme.fontMono};
   }
 
   .ui--row {
@@ -44,7 +44,7 @@ export default React.memo(styled(Holder)`
   }
 
   .ui--Param-Address {
-    font-family: monospace;
+    font-family: ${({ theme }: ThemeProps) => theme.fontMono};
   }
 
   .ui--Params-Content {
