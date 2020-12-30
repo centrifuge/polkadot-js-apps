@@ -30,6 +30,6 @@ export function createTesting (t: TFunction): LinkOption[] {
       text: t('rpc.fulvous', 'Fulvous', { ns: 'apps-config' }),
       textBy: t('rpc.hosted.by', 'hosted by {{host}}', { ns: 'apps-config', replace: { host: 'Centrifuge' } }),
       value: 'wss://fullnode.fulvous.centrifuge.io'
-    },
+    }
   ];
 }
