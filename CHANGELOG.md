@@ -1,5 +1,181 @@
 # CHANGELOG
 
+## 0.73.1 Dec 28, 2020
+
+Contributed:
+
+- Add PolkaBTC network & types (Thanks to https://github.com/savudani8)
+- Update Moonbeam types (Thanks to https://github.com/joelamouche)
+- Sora testnet naming (Thanks to https://github.com/stefashkaa)
+- Bounty crate validation (Thanks to https://github.com/MiZiet, https://github.com/krzysztof-jelski)
+- Bounty crate help text (Thanks to https://github.com/MiZiet, https://github.com/krzysztof-jelski)
+- Claim bounty payouts (Thanks to (Thanks to https://github.com/MiZiet)
+- All upcoming calendar view (Thanks to https://github.com/wirednkod)
+
+Changes:
+
+- Optimize staking data retrieval (18s -> 10s on Kusama test for staking overview load)
+- Pass explicit function (no strings) to TxButton props
+- Adjust calendar rows for dark theme
+- Update Frontier types (now included in API)
+- Webpack dev environment cleanups
+
+
+## 0.72.1 Dec 21, 2020
+
+Contributed:
+
+- Fix tooltip z-index on modals (Thanks to https://github.com/ii-ii-ii)
+- Align media queries on staking targets (Thanks to https://github.com/ii-ii-ii)
+- Handle pending bounty payouts (Thanks to https://github.com/ekowalsk)
+- Bounty create modal (Thanks to https://github.com/MiZiet, https://github.com/ekowalsk, https://github.com/krzysztof-jelski)
+- it i18n updates (Thanks to https://github.com/fomod-in)
+- Add Zero testnet (Thanks to https://github.com/2075)
+- Update encointer types & testnets (Thanks to https://github.com/brenzi)
+- Additional types for Dock network (Thanks to https://github.com/lovesh)
+- Update Phala endpoint (Thanks to https://github.com/h4x3rotab)
+
+Changes:
+
+- Add Rococo v1 testnet (with Tick, Trick & Track)
+- saving of toggle options on staking pages
+- Adjust bounties & tips with current Substrate endpoints
+- Add warning for older chains without atomic batches (where used)
+- Allow InputAddress display when no optional are available
+- Cleanup last-block-received countdowns (fixed character spacing)
+- Add sharing button for type definitions
+- Typo on society pages (with i18n key adjustments)
+- Adjust semantic-ui imports to non-cjs
+- Use RxJs & memoize from `@polkadot/util`
+- Cleanup global registry usage, only use registry from API
+- Cleanup info console logs for redirect (show APIs only as applicable)
+- Remove unused TxModal components
+- Swap to Webpack 5
+
+
+## 0.71.2 Dec 14, 2020
+
+Contributed:
+
+- Update it i18n (Thanks to https://github.com/fomod-in)
+- Add endpoint & types for MatchChain Galois (Thanks to https://github.com/hging)
+- Change endpoint for Sora (Thanks to https://github.com/stefashkaa)
+- Adjust Centrifuge types after upgrade (Thanks to https://github.com/mikiquantum)
+- Adjust Moonbeam types for future upgrades (Thanks to https://github.com/joelamouche)
+- Adjust Equilibrium types for balances (Thanks to https://github.com/pr0fedt)
+- Adjust bounties layout & add counter (Thanks to https://github.com/MiZiet)
+- Add max-width for content layouts (Thanks to https://github.com/MiZiet)
+- Use API derives for bounties (Thanks to https://github.com/krzysztof-jelski & https://github.com/MiZiet)
+- Extra type-only imports into seperate groups (Thanks to https://github.com/ekowalsk)
+
+Changes:
+
+- Multisig/Proxy add is only active when accounts are available
+- Adjust error popups to cater for strings as thrown (in addition to Error object)
+- Ensure that bad/erroneous judgements has the highest display priority
+- Detect new weight definitions for max batch-size calculations (with old fallback)
+- Move Sora & Moonbean type definitions to bundle-only
+- Allow for custom chain RPC definitions via typesBundle
+- Split endpoint definitions into folder (dev/prod/test)
+- Adjust Tooltip formatting with consistency between balances/locks
+
+
+## 0.70.1 Dec 7, 2020
+
+Contributed:
+
+- Add first area around bounties, the existing display (Thanks to https://github.com/krzysztof-jelski)
+- Adjust import ordering with plugin (Thanks to https://github.com/ekowalsk)
+- Add Polkadot/Kusama endpoints via PatractLabs (Thanks to https://github.com/toxotguo)
+- Add types for Bitfrost testnet (Thaks to https://github.com/janpo)
+- Adjust Crust network types & logo (Thanks to https://github.com/zikunfan)
+- Adjust types for Phala poc-3 (Thanks to https://github.com/LusWar)
+- Move to typesBundle for Moonbeam (Thanks to https://github.com/joelamouche)
+
+Changes:
+
+- Bump to latest Ledger libraries for Windows USB fixes
+- Store network endpoint affinity (last-used per network)
+- Only show links in sidebar for verified-good identities
+- Adjust staking pages to show loading indicators, optimize number of queries
+- Adjust staking target filters, including explicit identity grouping
+- Rework target/waiting loading with shared nominator loading
+- Cleanup calendar interface (ease of maintaining)
+- Remove sparsely-used classes utility (inconsistent use)
+- Swap to using TypeScript 4.1.2
+- Adjust dark theme to work with help overlays
+
+
+## 0.69.1 Nov 30, 2020
+
+Contributed:
+
+- Adjust font alignments (Thanks to https://github.com/MiZiet)
+- Add iCal export on calendar (Thanks to https://github.com/wirednkod)
+- Add OnFinality endpoint for Polkadot/Kusama (Thanks to https://github.com/ianhe8x)
+- Soramitsu Sora testnet (Thanks to https://github.com/stefashkaa)
+- Update Plasm Dusty types (Thanks to https://github.com/hoonsubin)
+- Update Edgeware mainnet endpoints (Thanks to https://github.com/drewstone)
+- Typo fixes (Thanks to https://github.com/ShankarWarang)
+
+Changes:
+
+- Display the actual era start when using Aura (no extra session info)
+- Expand staking account filters (payouts, # nominators, grouping)
+- Use percentage-based model for returns on staking targets
+- Display actual chain inflation as well as average staking returns
+- Adjust refresh on validator chill, i.e. it moves to correct location
+- User-defined RPCs (via config), not are treated first-class (operating everywhere)
+- MultiSig now allows any participant to reject (despite any prior approvals)
+- Adjust base fonts with saner cross-platform (from new.css) defaults
+- Adjust staking targets to display nominations for those dropped next session
+- Use `batchAll` on staking creation as available (failure reverses all)
+- Add CopyButton on all `Hash`-like fields
+- Cleanup component detection with non-primitives only (allows for greater configurability)
+- Improve `useCall` typing, e.g. no hacks for `.entries` or `.at` in usage
+- Adjust most type imports via `import type { ... }`
+- Move all chain-specific config to `apps-config` (thresholds & inflation)
+
+
+## 0.68.1 Nov 23, 2020
+
+Changes:
+
+- Adjust API state display to explictly render "connecting to node" state
+- Change Mill/Bill/Tril rendering from Mega/Giga/Tera
+- Staking now limits per-operator exposure by default (only 1 selected on auto)
+- Adjust Expanded rendering to be completely on-demand (no hidden background renders)
+- Ensure `MultiAddress` nodes fully work (API updates)
+- Adjust number of digits for number inputs to max decimals
+- Rework invalid ABI detection with proper error clearning
+- Use TypeScript `import type { ... }` for all files
+- Expand notes on colors/logos with actual RPC endpoints
+- Publish `@polkadot/apps-config` (with reworked import/export)
+- Bump Ledger libs to latest version (as per `@polkadot/ledger`)
+
+
+## 0.67.1 Nov 16, 2020
+
+Contributed:
+
+- Improve support/naming for Ethereum-compatible accounts (Thanks to https://github.com/joelamouche)
+- Support for Ethereum-compatible signature verification (https://github.com/joelamouche)
+- Added Moonbeam types for current versions (Thanks to https://github.com/joelamouche)
+- Added Moonbase Alpha to list of test networks (Thanks to (Thanks to https://github.com/joelamouche))
+- Add Equilibrium Mainnet; updated Equilibrium Testnet (Thanks to https://github.com/pr0fedt)
+- Update types of Cantillon testnet (Thanks to https://github.com/brenzi)
+- Update types of Gesell testnet (Thanks to https://github.com/brenzi)
+- Add Darwinia network (Thanks to https://github.com/WoeOm)
+- Add Bitfrost Asgard testnet (Thanks to https://github.com/janpo)
+
+Changes:
+
+- Ensure account addition checkbox shows on smaller screens
+- Add support for contract budles via `.contract` files
+- Allow contracts to specify salt parameter on deployments
+- Update contracts banner to reflect released Solang 0.1.5+ support
+
+
 ## 0.66.1 Nov 9, 2020
 
 Contributed:

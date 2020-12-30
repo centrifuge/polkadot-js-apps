@@ -3,6 +3,7 @@
 
 import BN from 'bn.js';
 import React, { useCallback, useState } from 'react';
+
 import { Input, InputAddress, InputBalance, Modal, TxButton } from '@polkadot/react-components';
 import { useApi, useCall } from '@polkadot/react-hooks';
 import { Available } from '@polkadot/react-query';
@@ -108,7 +109,7 @@ function Propose ({ className = '', onClose }: Props): React.ReactElement<Props>
               ? [hash, balance, publicProps?.length]
               : [hash, balance]
           }
-          tx='democracy.propose'
+          tx={api.tx.democracy.propose}
         />
       </Modal.Actions>
     </Modal>

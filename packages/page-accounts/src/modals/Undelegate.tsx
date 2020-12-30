@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+
 import { InputAddress, Modal, TxButton } from '@polkadot/react-components';
+import { useApi } from '@polkadot/react-hooks';
 
 import { useTranslation } from '../translate';
 
@@ -13,6 +15,7 @@ interface Props {
 
 function Undelegate ({ accountDelegating, onClose }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
+  const { api } = useApi();
 
   return (
     <Modal
@@ -40,8 +43,7 @@ function Undelegate ({ accountDelegating, onClose }: Props): React.ReactElement<
           icon='sign-in-alt'
           label={t<string>('Undelegate')}
           onStart={onClose}
-          params={[]}
-          tx='democracy.undelegate'
+          tx={api.tx.democracy.undelegate}
         />
       </Modal.Actions>
     </Modal>

@@ -1,12 +1,13 @@
 // Copyright 2017-2020 @polkadot/app-accounts authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { DeriveBalancesAll } from '@polkadot/api-derive/types';
-import { AccountInfo } from '@polkadot/types/interfaces';
+import type { DeriveBalancesAll } from '@polkadot/api-derive/types';
+import type { AccountInfo } from '@polkadot/types/interfaces';
 
 import BN from 'bn.js';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import { InputAddress, InputBalance, Modal, Toggle, TxButton } from '@polkadot/react-components';
 import { useApi, useCall } from '@polkadot/react-hooks';
 import { Available } from '@polkadot/react-query';
@@ -60,7 +61,6 @@ function Transfer ({ className = '', onClose, recipientId: propRecipientId, send
     }
   }, [api, balances, recipientId, senderId]);
 
-  const transferrable = <span className='label'>{t<string>('transferrable')}</span>;
   const canToggleAll = !isProtected && balances && balances.accountId.eq(senderId) && maxTransfer && (!accountInfo || !accountInfo.refcount || accountInfo.refcount.isZero());
 
   return (
@@ -80,7 +80,7 @@ function Transfer ({ className = '', onClose, recipientId: propRecipientId, send
                 label={t<string>('send from account')}
                 labelExtra={
                   <Available
-                    label={transferrable}
+                    label={t<string>('transferrable')}
                     params={senderId}
                   />
                 }
@@ -101,7 +101,7 @@ function Transfer ({ className = '', onClose, recipientId: propRecipientId, send
                 label={t<string>('send to address')}
                 labelExtra={
                   <Available
-                    label={transferrable}
+                    label={t<string>('transferrable')}
                     params={recipientId}
                   />
                 }
@@ -185,11 +185,7 @@ function Transfer ({ className = '', onClose, recipientId: propRecipientId, send
               ? [recipientId, maxTransfer]
               : [recipientId, amount]
           }
-          tx={
-            isProtected && api.tx.balances.transferKeepAlive
-              ? 'balances.transferKeepAlive'
-              : 'balances.transfer'
-          }
+          tx={(isProtected && api.tx.balances.transferKeepAlive) || api.tx.balances.transfer}
         />
       </Modal.Actions>
     </Modal>
