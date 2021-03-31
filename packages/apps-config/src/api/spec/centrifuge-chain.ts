@@ -60,5 +60,14 @@ export default {
     anchorId: 'Hash',
     staticHashes: '[Hash; 3]',
     proofs: 'Vec<ProofMint>'
+  },
+  ProxyType: {
+    _enum: [
+      'Any',
+      'NonTransfer',
+      'Governance',
+      'Staking',
+      'Vesting'
+    ]
   }
 };
